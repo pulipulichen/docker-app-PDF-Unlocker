@@ -34,7 +34,9 @@ let main = async function () {
     try {
       let inputPath = `/input/${filename}`
       let outputTemp = `/output/${filenameNoExt}.unlock.pdf`
-      await ShellSpawn(`qpdf --decrypt "${inputPath}" "${outputTemp}"`)
+      let cmd = `qpdf --decrypt "${inputPath}" "${outputTemp}"`
+      console.log(cmd)
+      await ShellSpawn(cmd)
 
       if (fs.existsSync(outputTemp)) {
         let outputTarget = `/output/${filename}`
