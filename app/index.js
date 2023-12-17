@@ -13,11 +13,6 @@ const ShowErrorMessage = require('./lib/ShowErrorMessage')
 
 let main = async function () {
   let files = GetFiles()
-  let filenameNoExt = filename
-  if (filenameNoExt.endsWith('.pdf')) {
-    filenameNoExt = filenameNoExt.slice(0, -4)
-  }
-
   if (isColab) {
     await ShellSpawn(`rm -rf /output/*`)
   }
@@ -25,6 +20,12 @@ let main = async function () {
   for (let i = 0; i < files.length; i++) {
     let file = files[i]
 
+    let filenameNoExt = file
+    if (filenameNoExt.endsWith('.pdf')) {
+      filenameNoExt = filenameNoExt.slice(0, -4)
+    }
+  
+    
     if (file.endsWith('.pdf') === false) {
       continue
     }
