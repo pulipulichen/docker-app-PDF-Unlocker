@@ -20,7 +20,8 @@ let main = async function () {
   for (let i = 0; i < files.length; i++) {
     let file = files[i]
 
-    let filenameNoExt = file
+    let filename = path.basename(file)
+    let filenameNoExt = filename
     if (filenameNoExt.endsWith('.pdf')) {
       filenameNoExt = filenameNoExt.slice(0, -4)
     }
@@ -31,12 +32,12 @@ let main = async function () {
     }
     
     try {
-      let inputPath = `/input/${file}`
+      let inputPath = `/input/${filename}`
       let outputTemp = `/output/${filenameNoExt}.unlock.pdf`
       await ShellSpawn(`qpdf --decrypt "${inputPath}" "${outputTemp}"`)
 
       if (fs.existsSync(outputTemp)) {
-        let outputTarget = `/output/${file}`
+        let outputTarget = `/output/${filename}`
         if (fs.existsSync(outputTarget)) {
           fs.unlinkSync(outputTarget)
         }
